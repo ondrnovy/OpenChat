@@ -6,13 +6,15 @@ import androidx.room.ForeignKey.SET_NULL
 import java.util.*
 
 
-@Entity(tableName = "messages", foreignKeys = arrayOf(
-    ForeignKey(
-        entity = Contact::class,
-        onDelete = SET_NULL,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("contact_id"))
-)
+@Entity(tableName = "messages",
+    foreignKeys = arrayOf(
+        ForeignKey(
+            entity = Contact::class,
+            onDelete = SET_NULL,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("contact_id"))
+    ),
+    indices = arrayOf(Index(value = ["contact_id"]))
 )
 data class Message(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "m_id") var id: Int = 0,
@@ -22,5 +24,5 @@ data class Message(
     val isOut: Boolean,
     val created: Date = Date(),
 
-    @ColumnInfo(name = "contact_id") val contactId: Int? = null
+    @ColumnInfo(name = "contact_id") val contactId: Int
 )

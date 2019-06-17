@@ -7,11 +7,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "contacts")
 data class Contact(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") var id: Int,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") var id: Int = 0,
 
-    val photo: Uri?,
-    val displayName: String?,
+    val photo: Uri? = null,
+    val displayName: String,
 
-    val phone: String?,
-    val email: String?
+    val phone: String = "",
+    val email: String = ""
 )

@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
 
         conversationViewModel = ViewModelProviders.of(this).get(ConversationViewModel::class.java)
-        conversationViewModel.allMessages.observe(this, Observer { messages ->
+        conversationViewModel.allMessageWithContact.observe(this, Observer { messages ->
             // Update the cached copy of the words in the adapter.
             messages?.let { adapter.setMessages(messages) }
         })

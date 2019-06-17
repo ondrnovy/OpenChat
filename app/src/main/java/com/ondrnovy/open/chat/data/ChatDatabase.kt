@@ -1,6 +1,7 @@
 package com.ondrnovy.open.chat.data
 
 import android.content.Context
+import android.net.Uri
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -10,7 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = arrayOf(Message::class, Contact::class), version = 1)
+@Database(entities = arrayOf(Message::class, Contact::class), version = 5)
 @TypeConverters(Converters::class)
 public abstract class ChatDatabase : RoomDatabase() {
 
@@ -25,15 +26,37 @@ public abstract class ChatDatabase : RoomDatabase() {
 
 
         suspend fun populateDatabaseWithTestData(messageWithContactDao: MessageWithContactDao) {
-            var message = Message(text = "Ahoj", isOut = true)
+            messageWithContactDao.deleteAll()
+
+            val contact = Contact(displayName = "Kokot")
+            val contactId = messageWithContactDao.insert(contact).toInt()
+
+            val photoUri = Uri.parse("http://goo.gl/gEgYUd")
+            val contact2 = Contact(displayName = "Arnie", photo = photoUri)
+            val contactId2 = messageWithContactDao.insert(contact2).toInt()
+
+
+            var message = Message(text = "Ahoj", isOut = true, contactId = contactId2)
             messageWithContactDao.insert(message)
 
-            message = Message(text = "Jak se kurva máš", isOut = true)
+            message = Message(text = "Jak se kurva máš", isOut = true, contactId = contactId2)
             messageWithContactDao.insert(message)
 
-            message = Message(text = "Blbě", isOut = false)
+            message = Message(text = "Blbě", isOut = false, contactId = contactId2)
+            messageWithContactDao.insert(message)
+
+            message = Message(text = "CCCC", isOut = false, contactId = contactId2)
             messageWithContactDao.insert(message)
         }
+
+
+
+        suspend fun populateDatabaseWithContentProviders(messageWithContactDao: MessageWithContactDao) {
+            messageWithContactDao.deleteAll()
+
+
+        }
+
 
 
         override fun onOpen(db: SupportSQLiteDatabase) {
@@ -41,7 +64,8 @@ public abstract class ChatDatabase : RoomDatabase() {
 
             INSTANCE?.let { database ->
                 scope.launch(Dispatchers.IO) {
-                    populateDatabaseWithTestData(database.messageWithContactDao())
+                    //populateDatabaseWithTestData(database.messageWithContactDao())
+                    populateDatabaseWithContentProviders(database.messageWithContactDao())
                 }
             }
         }
@@ -72,7 +96,9 @@ public abstract class ChatDatabase : RoomDatabase() {
                     ChatDatabaseCallback(
                         scope
                     )
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 return instance
             }

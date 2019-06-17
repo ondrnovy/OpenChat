@@ -1,4 +1,6 @@
 <resources>
+    <dimen name="message_item_padding">16dp</dimen>
+
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="small_padding">6dp</dimen>
