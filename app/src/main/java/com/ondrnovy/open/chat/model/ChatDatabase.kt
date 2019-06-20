@@ -1,4 +1,4 @@
-package com.ondrnovy.open.chat.data
+package com.ondrnovy.open.chat.model
 
 import android.content.Context
 import android.net.Uri
@@ -7,6 +7,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.ondrnovy.open.chat.model.messageLoader.ContentProviderMessageLoader
+import com.ondrnovy.open.chat.model.messageLoader.TestMessageLoader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,33 +28,15 @@ public abstract class ChatDatabase : RoomDatabase() {
 
 
         suspend fun populateDatabaseWithTestData(messageWithContactDao: MessageWithContactDao) {
-            messageWithContactDao.deleteAll()
 
-            val contact = Contact(displayName = "Kokot")
-            val contactId = messageWithContactDao.insert(contact).toInt()
-
-            val photoUri = Uri.parse("http://goo.gl/gEgYUd")
-            val contact2 = Contact(displayName = "Arnie", photo = photoUri)
-            val contactId2 = messageWithContactDao.insert(contact2).toInt()
-
-
-            var message = Message(text = "Ahoj", isOut = true, contactId = contactId2)
-            messageWithContactDao.insert(message)
-
-            message = Message(text = "Jak se kurva máš", isOut = true, contactId = contactId2)
-            messageWithContactDao.insert(message)
-
-            message = Message(text = "Blbě", isOut = false, contactId = contactId2)
-            messageWithContactDao.insert(message)
-
-            message = Message(text = "CCCC", isOut = false, contactId = contactId2)
-            messageWithContactDao.insert(message)
         }
 
 
 
         suspend fun populateDatabaseWithContentProviders(messageWithContactDao: MessageWithContactDao) {
             messageWithContactDao.deleteAll()
+
+
 
 
         }
@@ -64,8 +48,7 @@ public abstract class ChatDatabase : RoomDatabase() {
 
             INSTANCE?.let { database ->
                 scope.launch(Dispatchers.IO) {
-                    //populateDatabaseWithTestData(database.messageWithContactDao())
-                    populateDatabaseWithContentProviders(database.messageWithContactDao())
+
                 }
             }
         }

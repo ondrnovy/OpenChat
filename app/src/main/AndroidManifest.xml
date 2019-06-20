@@ -3,7 +3,9 @@
           package="com.ondrnovy.open.chat">
 
     <uses-permission android:name="android.permission.INTERNET"/><!-- Glide - downloading images from url -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/><!-- Glide - downloading images from url -->
+
+    <uses-permission android:name="android.permission.READ_SMS"/> <!-- Content providers - SMS -->
 
 
     <application
@@ -14,10 +16,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name="com.ondrnovy.open.chat.ui.NewWordActivity">
+        <activity android:name="com.ondrnovy.open.chat.view.NewWordActivity">
         </activity>
         <activity
-                android:name="com.ondrnovy.open.chat.ui.MainActivity"
+                android:name="com.ondrnovy.open.chat.view.MainActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

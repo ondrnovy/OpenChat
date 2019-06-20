@@ -1,4 +1,4 @@
-package com.ondrnovy.open.chat.data
+package com.ondrnovy.open.chat.model
 
 
 import androidx.room.Embedded

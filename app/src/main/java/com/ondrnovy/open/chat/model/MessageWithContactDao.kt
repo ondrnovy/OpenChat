@@ -1,4 +1,4 @@
-package com.ondrnovy.open.chat.data
+package com.ondrnovy.open.chat.model
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
@@ -12,14 +12,15 @@ interface MessageWithContactDao {
     @Query(
         "SELECT * " +
                 "FROM messages LEFT JOIN contacts " +
-                "WHERE contacts.id = messages.contact_id"
+                "WHERE contacts.id = messages.contact_id " +
+                "ORDER BY messages.created DESC"
     )
     fun getAllMessagesWithContact(): LiveData<List<MessageWithContact>>
 
 
 
     @Query(
-        "SELECT * FROM messages"
+        "SELECT * FROM messages ORDER BY created DESC"
     )
     fun getAllMessages(): LiveData<List<Message>>
 

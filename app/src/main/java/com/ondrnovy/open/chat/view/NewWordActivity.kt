@@ -1,4 +1,4 @@
-package com.ondrnovy.open.chat.ui
+package com.ondrnovy.open.chat.view
 
 import android.app.Activity
 import android.content.Intent

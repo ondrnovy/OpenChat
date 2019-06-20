@@ -1,10 +1,10 @@
-package com.ondrnovy.open.chat.model
+package com.ondrnovy.open.chat.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.ondrnovy.open.chat.data.*
+import com.ondrnovy.open.chat.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -21,7 +21,15 @@ class ConversationViewModel(application: Application) : AndroidViewModel(applica
         allMessages = repository.allMessages
     }
 
+
+
+
     fun insert(word: Message) = viewModelScope.launch(Dispatchers.IO) {
         //repository.insert(word)
+    }
+
+
+    fun onGotReadPermission()= viewModelScope.launch(Dispatchers.IO) {
+        repository.loadTelephonyMessages()
     }
 }

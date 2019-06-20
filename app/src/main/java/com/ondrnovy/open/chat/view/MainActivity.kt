@@ -1,4 +1,4 @@
-package com.ondrnovy.open.chat.ui
+package com.ondrnovy.open.chat.view
 
 import android.app.Activity
 import android.content.Intent
@@ -16,14 +16,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 import com.ondrnovy.open.chat.R
 
-import com.ondrnovy.open.chat.model.ConversationViewModel
-import com.ondrnovy.open.chat.model.MessageListAdapter
+import com.ondrnovy.open.chat.viewModel.ConversationViewModel
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : SuperActivity() {
 
 
-    private lateinit var conversationViewModel: ConversationViewModel
+
 
 
 
@@ -44,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
 
-        conversationViewModel = ViewModelProviders.of(this).get(ConversationViewModel::class.java)
+
         conversationViewModel.allMessageWithContact.observe(this, Observer { messages ->
             // Update the cached copy of the words in the adapter.
             messages?.let { adapter.setMessages(messages) }

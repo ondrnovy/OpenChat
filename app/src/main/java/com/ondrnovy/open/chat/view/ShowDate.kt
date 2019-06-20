@@ -1,4 +1,4 @@
-package com.ondrnovy.open.chat.utils
+package com.ondrnovy.open.chat.view
 
 import java.text.SimpleDateFormat
 import java.util.*
