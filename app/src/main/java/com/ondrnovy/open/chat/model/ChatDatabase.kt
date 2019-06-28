@@ -21,46 +21,6 @@ public abstract class ChatDatabase : RoomDatabase() {
 
 
 
-
-    private class ChatDatabaseCallback(
-        private val scope: CoroutineScope
-    ) : RoomDatabase.Callback() {
-
-
-        suspend fun populateDatabaseWithTestData(messageWithContactDao: MessageWithContactDao) {
-
-        }
-
-
-
-        suspend fun populateDatabaseWithContentProviders(messageWithContactDao: MessageWithContactDao) {
-            messageWithContactDao.deleteAll()
-
-
-
-
-        }
-
-
-
-        override fun onOpen(db: SupportSQLiteDatabase) {
-            super.onOpen(db)
-
-            INSTANCE?.let { database ->
-                scope.launch(Dispatchers.IO) {
-
-                }
-            }
-        }
-
-
-        override fun onCreate(db: SupportSQLiteDatabase) {
-            super.onCreate(db)
-
-        }
-
-    }
-
     companion object {
         @Volatile
         private var INSTANCE: ChatDatabase? = null
@@ -75,10 +35,6 @@ public abstract class ChatDatabase : RoomDatabase() {
                     context.applicationContext,
                     ChatDatabase::class.java,
                     "chat_database"
-                ).addCallback(
-                    ChatDatabaseCallback(
-                        scope
-                    )
                 )
                     .fallbackToDestructiveMigration()
                     .build()
